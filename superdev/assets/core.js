@@ -85,20 +85,22 @@ function header(p) {
     ['build', 'สิ่งที่จะได้ทำ'],
     ['missions', 'ภารกิจ 4 วัน'],
     ['faq', 'FAQ'],
-    ['home', 'กลับหน้าแรก'],
   ];
+  const mobileCta = p.cta === false ? '' : `<li class="mobile-nav-cta">${registerLink(p, 'btn btn-primary btn-sm')}</li>`;
   return `
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="${p.home}#top" aria-label="${e(c.camp.name)} โดย ${e(c.camp.organizer)} — กลับด้านบน">
-      ${logoImg(p.root, 'brand-logo', true)}
-      <span class="brand-by">by ${e(c.camp.organizer)}</span>
-    </a>
+    <div class="brand-group">
+      <a class="brand" href="${p.home}#top" aria-label="${e(c.camp.name)} โดย ${e(c.camp.organizer)} — กลับด้านบน">
+        ${logoImg(p.root, 'brand-logo', true)}
+        <span class="brand-by">by ${e(c.camp.organizer)}</span>
+      </a>
+      <a class="nav-home" href="${onHost ? '/' : `${p.home}#top`}"${onHost ? ' target="_top"' : ''}>กลับหน้าแรก</a>
+    </div>
     <nav id="site-nav" class="site-nav" aria-label="เมนูหลัก">
       <ul>
-        ${links.map(([id, t]) => id === 'home'
-          ? `<li><a class="nav-home" href="${onHost ? '/' : `${p.home}#top`}"${onHost ? ' target="_top"' : ''}>${t}</a></li>`
-          : `<li><a href="${p.home}#${id}">${t}</a></li>`).join('')}
+        ${links.map(([id, t]) => `<li><a href="${p.home}#${id}">${t}</a></li>`).join('')}
+        ${mobileCta}
       </ul>
     </nav>
     ${p.cta === false ? '' : registerLink(p, 'btn btn-primary btn-sm header-cta')}
